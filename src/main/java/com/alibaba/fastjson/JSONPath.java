@@ -2040,7 +2040,12 @@ public class JSONPath implements JSONAware {
 
             if (commaIndex != -1) {
                 String[] indexesText = indexText.split(",");
-
+                if(!TypeUtils.isNumber(indexesText[0])){
+                    if (indexText.charAt(0) == '"' && indexText.charAt(indexText.length() - 1) == '"') {
+                        indexText = indexText.substring(1, indexText.length() - 1);
+                    }
+                    return new PropertySegment(indexText, false);
+                }
                 int[] indexes = new int[indexesText.length];
                 for (int i = 0; i < indexesText.length; ++i) {
                     indexes[i] = Integer.parseInt(indexesText[i]);
